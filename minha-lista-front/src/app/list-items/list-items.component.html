@@ -1,0 +1,63 @@
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
+<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
+<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * Delete the template below * * * * * * * * * * -->
+<!-- * * * * * * * to get started with your project! * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
+
+
+
+<html>
+  <body>
+    <div class="card-list-header">
+      <h1>Lista de compras</h1>
+    </div>
+
+    <div class="card-list-panel">
+
+      <div *ngFor="let item of items; let i = index;" class="card-item">
+        <div class="">
+          <input type="checkbox" name="checkbox" id="checkbox" (click)="addSelectedItem(item.desc, i)">
+          <input #input type="text" class="item-text" value={{item.desc}} (input)="editItem($event,i)" (keydown.enter)="addItem()" tabindex="-1">
+        </div>
+        <img src="../assets/delete.svg" alt="" (click)="removeItem(i)">
+      </div>
+
+      <div class="card-item add">
+        <div>
+          <img src="../assets/add.svg" alt="">
+          <button (click)="addItem()">Adicionar Item</button>
+        </div>
+      </div>
+
+      <div *ngFor="let selectedItem of selectedItems; let i = index" class="card-item selected">
+        <div class="">
+          <input type="checkbox" name="checkbox" id="checkbox" checked="checked" (click)="removeSelectedItem(selectedItem.desc, i)">
+          <span><s>{{selectedItem.desc}}</s></span>
+        </div>
+        <img src="../assets/delete.svg" alt="" (click)="deleteSelectedItem(i)">
+      </div>
+
+    </div>
+
+  </body>
+</html>
+
+
+
+
+
+<!-- <router-outlet></router-outlet> -->
+
+
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->
+<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
+<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
