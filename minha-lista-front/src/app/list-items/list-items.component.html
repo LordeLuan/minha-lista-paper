@@ -21,7 +21,7 @@
       <div *ngFor="let item of items; let i = index;" class="card-item">
         <div class="">
           <input type="checkbox" name="checkbox" id="checkbox" (click)="addSelectedItem(item.desc, i)">
-          <input #input type="text" class="item-text" value={{item.desc}} (input)="editItem($event,i)" (keydown.enter)="addItem()" tabindex="-1">
+          <input #input type="text" class="item-text" value={{item.nome}} (input)="editItem($event,i)" (keydown.enter)="addItem()" tabindex="-1">
         </div>
         <img src="../assets/delete.svg" alt="" (click)="removeItem(i)">
       </div>

@@ -11,6 +11,7 @@ public class ItemDTO {
 	private String nome;
 	private Integer quantidade;
 	private Double valor;
+	private Boolean ativo;
 	private LocalDateTime dataCriacao;
-	
+
 }

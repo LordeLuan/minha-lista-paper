@@ -52,6 +52,7 @@ public class ItemService {
 		dto.setNome(item.getNome());
 		dto.setQuantidade(item.getQuantidade());
 		dto.setValor(item.getValor());
+		dto.setAtivo(item.getAtivo());
 		return dto;
 	}
 
@@ -61,6 +62,7 @@ public class ItemService {
 		item.setNome(itemDTO.getNome());
 		item.setQuantidade(itemDTO.getQuantidade());
 		item.setValor(itemDTO.getValor());
+		item.setAtivo(itemDTO.getAtivo());
 		return item;
 	}
 }
