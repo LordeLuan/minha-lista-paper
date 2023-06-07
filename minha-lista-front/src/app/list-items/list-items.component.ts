@@ -1,7 +1,6 @@
+import { Component, OnInit } from '@angular/core';
 import { Item } from './../models/Item';
 import { ItemService } from './../services/item.service';
-import { OnInit } from '@angular/core';
-import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
 
 @Component({
   selector: 'app-list-items',
@@ -9,8 +8,12 @@ import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
   styleUrls: ['./list-items.component.css'],
 })
 export class ListItemsComponent implements OnInit {
-  selectedItems: any = [];
-  items: any = [];
+  selectedItems: Item[] = [];
+  items: Item[] = [];
+
+  item = new Item();
+
+  add = false;
 
   constructor(private service: ItemService) {}
 
@@ -21,6 +24,8 @@ export class ListItemsComponent implements OnInit {
   listarItens() {
     this.service.listar().subscribe((resposta: Item[]) => {
       console.log(resposta);
+      this.items.splice(0);
+      this.selectedItems.splice(0);
       resposta.forEach((item) => {
         if (item.ativo) {
           this.items.push(item);
@@ -32,34 +37,48 @@ export class ListItemsComponent implements OnInit {
   }
 
   addItem() {
-    this.items.push({ desc: '' });
+    this.add = !this.add;
   }
 
-  removeItem(index: number) {
-    this.items.splice(index, 1);
+  cadastrarItem(){
+    this.item.ativo = true;
+    this.service.criar(this.item).subscribe(resposta =>{
+      this.listarItens();
+      this.item.nome = undefined;
+    }, (ex)=>{
+      alert('Algo deu errado ao realizar o cadastro do item!');
+    })
   }
 
-  editItem(event: Event, index: number) {
-    this.items[index].desc = (<HTMLInputElement>event.target).value;
+  deleteItem(id: any) {
+    console.log(id);
+    this.service.deletar(id).subscribe((resp)=>{
+      console.log('Deletado!');
+      this.listarItens();
+    })
   }
 
-  addSelectedItem(desc: string, index: number) {
-    this.selectedItems.push({ desc: desc });
-    this.removeItem(index);
-  }
+  addSelectedItem(item:Item) {
+    item.ativo = false;
+    this.selectedItems.push(item);
+    this.items.splice(this.items.indexOf(item),1);
 
-  removeSelectedItem(desc: string, index: number) {
-    this.items.push({ desc: desc });
-    this.selectedItems.splice(index, 1);
+    this.service.atualizar(item).subscribe(resposta =>{
+      console.log('Atualizado!');
+    });
+  }
+  
+  removeSelectedItem(item:Item) {
+    item.ativo = true;
+    this.items.push(item);
+    this.selectedItems.splice(this.selectedItems.indexOf(item), 1);
+
+    this.service.atualizar(item).subscribe(resposta =>{
+      console.log('Atualizado!');
+    });
   }
 
   deleteSelectedItem(index: number) {
     this.selectedItems.splice(index, 1);
   }
-
-  @ViewChildren('input') inputs: QueryList<ElementRef> | undefined;
-
-  // ngAfterViewChecked() {
-  //   this.inputs!.last.nativeElement.focus();
-  // }
 }

@@ -20,7 +20,7 @@ export class ItemService {
     return this.http.post<Item>(this.API, item);
   }
   atualizar(item: Item): Observable<Item> {
-    return this.http.put<Item>(this.API, item);
+    return this.http.put<Item>(this.API+`/${item.id}`, item);
   }
   deletar(id: number): Observable<Item> {
     return this.http.delete<Item>(this.API + `/${id}`);
